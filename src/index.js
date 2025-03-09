@@ -20,8 +20,22 @@ const types = document.getElementById("types");
 //    HINT --> Don't forget to invoke the function
 
 const fetchPokemons = () => {
+  fetch('https://pokeapi.co/api/v2/pokemon/')
+    .then(response => {
+
+      return response.json()
+    })
+    .then(json => {
+      const allPokemon = json.results
+
+      allPokemon.forEach((poke) => {
+        console.log(poke.name)
+      });
+
+    })
   /*Fetch all pokemons here*/
 };
+fetchPokemons()
 
 // 2) a) As you can see, we get some metadata as well as
 //    the results of the fetch. Change the console.log so
@@ -38,6 +52,7 @@ const fetchPokemons = () => {
 //    choice, like this: https://pokeapi.co/api/v2/pokemon/?limit=151
 //    and pick a pokemon that you would like to continue
 //    working with. Copy the pokemon's URL.
+//  pokemon URL 'https://pokeapi.co/api/v2/pokemon/6/'
 
 // 4) Now that we've picked a pokemon, we will do a new fetch
 //    to the URL we copied. Since that's another endpoint,
@@ -45,9 +60,29 @@ const fetchPokemons = () => {
 //    function (change the function's name to fit your pokemon).
 //    Log the data in the console and see what you find.
 
-const fetchBulbasaurData = () => {
-  /*Fetch singular pokemon here*/
+const fetchCharizardData = () => {
+  fetch('https://pokeapi.co/api/v2/pokemon/6/')
+    .then(result => {
+      return result.json()
+    })
+    .then(json => {
+      console.log(json)
+      // now I want to update the table lets go 
+      image.src = json.sprites.front_default;
+      name.innerText = json.name
+      weight.innerText = json.weight
+      height.innerText = json.height
+      types.innerText = ''
+      json.types.forEach((singleType) => {
+        types.innerText += `${singleType.type.name} \n`
+        //  singleType.types.name
+
+      })
+
+
+    })
 };
+fetchCharizardData()
 
 // 5) After familiarizing with the data, we will use the data
 //    to change our table. We will give you the image as a start.
